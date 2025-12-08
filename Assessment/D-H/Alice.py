@@ -5,9 +5,9 @@ from para import p, g, PASSWORD
 
 def main():
     print("Select mode:")
-    print("1 → Unencrypted D-H (No Defense)")
-    print("2 → Attacked D-H (Man-in-the-Middle Attack)")
-    print("3 → Defended D-H (With Password Verification)")
+    print("1 -> Unencrypted D-H (No Defense)")
+    print("2 -> Attacked D-H (Man-in-the-Middle Attack)")
+    print("3 -> Defended D-H (With Password Verification)")
     choice = input("Enter 1/2/3: ").strip()
 
     if choice not in ['1', '2', '3']:
@@ -16,10 +16,10 @@ def main():
 
     # Determine connection target
     if choice == '2':
-        port = 9999  # Attacker
-        print("[Alice] Mode Two: Simulate a D-H being attacked and connect to the attacker (8889)")
+        port = 9999  # Attacker port
+        print("[Alice] Mode Two: Simulating attacked D-H, connecting to attacker (9999)")
     else:
-        port = 8888  # Bob
+        port = 8888  # Bob port
         print(f"[Alice] Mode {choice}: Connecting to Bob (8888)")
 
     client = socket.socket()
@@ -33,7 +33,7 @@ def main():
         # Generate private key and public key
         a = random.randint(1, p-2)
         A = pow(g, a, p)
-        print(f"[Alice] Public Key: {A}")
+        print(f"[Alice] Generated Public Key: {A}")
 
         # Construct data to send
         data = {'public_key': A, 'mode': int(choice)}
@@ -52,7 +52,7 @@ def main():
 
         # Calculate shared key
         shared_key = pow(B, a, p)
-        print(f"[Alice] Shared Key: {shared_key}")
+        print(f"[Alice] Calculated Shared Key: {shared_key}")
 
     except Exception as e:
         print(f"[Alice] Communication error: {e}")
